@@ -14,6 +14,7 @@ class LinkedList{
 
     display = () => {
         if(this.isCircle){
+            console.log('this is your circular linked list: ')
             console.log(this.head)
             let pointer = this.head.next
             while(pointer != this.head){
@@ -22,8 +23,8 @@ class LinkedList{
             }
         }
         else {
-            console.log(this.head)
-            let pointer = this.head.next
+            console.log('this is your singly linked list: ')
+            let pointer = this.head
             while(pointer != null ){
             console.log(pointer)
             pointer = pointer.next;
@@ -141,6 +142,59 @@ class LinkedList{
             this.tail = pointer
         }
     }
+
+    reverse = () => {
+
+        if(this.isCircle == false){
+            let queue = []
+            let pointer = this.head 
+
+            while(pointer.next.next != null){
+                queue.unshift(pointer)
+                pointer = pointer.next
+            }
+            this.head = pointer
+
+            while(queue.length > 0){
+                let list_item = queue[0]
+                pointer.next = list_item
+                queue.shift()
+                list_item.next = queue[0]
+                pointer = pointer.next
+            }
+
+            linkedlist.display()
+            
+        }
+
+        else if(this.isCircle){
+            let queue = []
+            let pointer = this.head 
+
+            while(pointer.next != this.head){
+                queue.unshift(pointer)
+                pointer = pointer.next
+            }
+
+            this.head = pointer
+
+            while(queue.length > 0){
+                let list_item = queue[0]
+                pointer.next = list_item
+                queue.shift()
+                if(queue.length > 0){
+                    list_item.next = queue[0]
+                }
+                else{
+                    list_item.next = this.head
+                }
+                
+                pointer = pointer.next
+            }
+
+            linkedlist.display()
+        }
+    }
 }
 
 
@@ -149,14 +203,3 @@ let tailn = new Node(null, null)
 let headn = new Node(5, tailn)
 
 let linkedlist = new LinkedList(headn, tailn)
-
-linkedlist.prepend(7)
-linkedlist.prepend(19)
-linkedlist.append(22)
-linkedlist.append(54)
-linkedlist.prepend(11)
-linkedlist.insert_at_index(2, 3)
-linkedlist.delete(54)
-linkedlist.append(100)
-linkedlist.prepend(1)
-linkedlist.reverse()
